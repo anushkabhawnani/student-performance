@@ -1,3 +1,4 @@
+import textwrap
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -9,7 +10,6 @@ import os
 from dotenv import find_dotenv, load_dotenv
 import smtplib
 from email.message import EmailMessage
-import textwrap
 from tabulate import tabulate
 
 dotenv_path = find_dotenv()
@@ -162,12 +162,12 @@ if st.session_state.user_role == "Student":
             msg = EmailMessage()
             msg.set_content(body)
             msg['Subject'] = subject
-            msg['From'] = sender_email
+            msg['From'] = senderemail
             msg['To'] = email
 
             with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
                 smtp.starttls()
-                smtp.login(sender_email, password)
+                smtp.login(senderemail, senderpass)
                 smtp.send_message(msg)
 
             st.success(f"Email sent to {st.session_state.student_row['Email_ID']} with the reasons for low score.")
@@ -209,7 +209,7 @@ if st.session_state.user_role == "Teacher":
         if button:
             risk_students = []
             for _, row in st.session_state.file.iterrows():
-                if row['Final_Score'] < int(threshold):
+                if row['Predicted_Final_Score'] < int(threshold):
                     risk_students.append({
                         "Student_Name": row["First_Name"],
                         "Student_ID": row['Student_ID'],
@@ -240,12 +240,12 @@ if st.session_state.user_role == "Teacher":
             msg = EmailMessage()
             msg.set_content(body)
             msg['Subject'] = subject
-            msg['From'] = senderemail
+            msg['From'] = sender_email
             msg['To'] = st.session_state.teacher_email
 
             with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
                 smtp.starttls()
-                smtp.login(senderemail, senderpass)
+                smtp.login(sender_email, password)
                 smtp.send_message(msg)
 
             st.success(f"Email sent!")
