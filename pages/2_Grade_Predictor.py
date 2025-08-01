@@ -9,6 +9,8 @@ import os
 from dotenv import find_dotenv, load_dotenv
 import smtplib
 from email.message import EmailMessage
+import textwrap
+from tabulate import tabulate
 
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
@@ -127,7 +129,7 @@ if st.session_state.user_role == "Student":
         "Attendance": 75  # <75% attendance is usually poor
     }
 
-    if student_row['Final_Score'] < 70:
+    if predicted_score < 70:
         reasons = []
 
         for column, threshold in thresholds.items():
@@ -232,18 +234,18 @@ if st.session_state.user_role == "Teacher":
     Model Minds Team
     """)
 
-            sender_email = sender_email
+            sender_email = senderemail
             password = senderpass
 
             msg = EmailMessage()
             msg.set_content(body)
             msg['Subject'] = subject
-            msg['From'] = sender_email
+            msg['From'] = senderemail
             msg['To'] = st.session_state.teacher_email
 
             with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
                 smtp.starttls()
-                smtp.login(sender_email, password)
+                smtp.login(senderemail, senderpass)
                 smtp.send_message(msg)
 
             st.success(f"Email sent!")
