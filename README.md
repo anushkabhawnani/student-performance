@@ -1,4 +1,4 @@
-# 📊 AI-Powered Student Performance Predictor Dashboard
+# 📊 AI-Powered Student Performance Predictor
 
 The **Student Dashboard** is an interactive and user-friendly web application built using Streamlit. It provides students with personalized insights into their academic performance, offering both core functionalities like grade prediction and attendance tracking, and add-on features such as visual analytics, performance alerts and an AI chatbot.
 
@@ -71,6 +71,9 @@ pip install -r requirements.txt
 streamlit run Dashboard.py
 ```
 ## 📷 Demo
+
+Try out the app here!
+[Performnce Predictor](https://student-performance-pzy47aaaf2wgxxtvmtcwbd.streamlit.app/)
 
 ### Student Dashboard
 
